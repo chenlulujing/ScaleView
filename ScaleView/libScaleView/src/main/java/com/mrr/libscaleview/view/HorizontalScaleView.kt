@@ -37,16 +37,33 @@ class HorizontalScaleView : BaseScaleView {
         clipRect = RectF()
     }
 
-    override fun onDraw(canvas: Canvas?, touchX: Float, touchY: Float) {
+    fun calculateCurrentPosition(touchX: Float) {
+        for (index in 0..mAttr.mTotalProgress) {
+            if (nodeStartX + mAttr.mScaleLineWidth > touchX && nodeStartX < touchX) {
+                mAttr.mCurrentPosition = index
+                break
+            }
+            nodeStartX += (perInterval + mAttr.mScaleLineWidth)
+            nodeStopX += (perInterval + mAttr.mScaleLineWidth)
+        }
 
+    }
+
+
+    override fun onDraw(canvas: Canvas?, touchX: Float, touchY: Float) {
+//        if (touchX != 0f && touchY != 0f && mAttr.mCurrentPosition != 0) {
+//            var currentPosition = mAttr.mCurrentPosition
+//            calculateCurrentPosition(touchX)
+//            if (currentPosition == mAttr.mCurrentPosition) {
+//                return
+//            }
+//        }
         clipProgress = drawSpace * (touchX - mAttr.mPaddingLeft) / drawSpace
 
-        clipRect?.set(0f, 0f, touchX, mAttr.mHeight)
+        clipRect?.set(0f, 0f, mAttr.mCurrentX, mAttr.mHeight)
         drawLineScale(canvas, changeColorPaint, clipRect, touchX)
         progressChange(mAttr.mTotalProgress * (touchX - mAttr.mPaddingLeft) / drawSpace)
-
-        clipRect?.set(touchX, 0f, mAttr.mWidth, mAttr.mHeight)
-
+        clipRect?.set(mAttr.mCurrentX, 0f, mAttr.mWidth, mAttr.mHeight)
         drawLineScale(canvas, originColorPaint, clipRect, touchX)
 
 //        drawCursor(canvas, touchX, touchY)
@@ -80,9 +97,9 @@ class HorizontalScaleView : BaseScaleView {
         keyStartY = mAttr.mPaddingTop + (interval - keylength) / 2
         keyStopY = keyStartY + keylength
 
-        Log.i("llc_scale","keyStartY =${keyStartY}")
-        Log.i("llc_scale","keyStopY =${keyStopY}")
-        Log.i("llc_scale","keylength =${keylength}")
+        Log.i("llc_scale", "keyStartY =${keyStartY}")
+        Log.i("llc_scale", "keyStopY =${keyStopY}")
+        Log.i("llc_scale", "keylength =${keylength}")
 
         for (index in 0..mAttr.mTotalProgress) {
 
@@ -110,9 +127,10 @@ class HorizontalScaleView : BaseScaleView {
 //            Log.i("llc_scale","nodeStartX + mAttr.mScaleLineWidth =${nodeStartX + mAttr.mScaleLineWidth }")
 //            Log.i("llc_scale","touchX =${touchX}")
 //            Log.i("llc_scale","nodeStartX =${nodeStartX}")
-            if (nodeStartX + mAttr.mScaleLineWidth > touchX && nodeStartX < touchX) {
+            if (nodeStartX + mAttr.mScaleLineWidth + perInterval > touchX && nodeStartX < touchX) {
+                mAttr.mCurrentPosition = index
                 //未滑动部分最后刻度
-                Log.i("llc_scale","未滑动部分最后刻度")
+                Log.i("llc_scale", "未滑动部分最后刻度")
                 canvas?.drawLine(
                     nodeStartX,
                     keyStartY,
@@ -120,10 +138,12 @@ class HorizontalScaleView : BaseScaleView {
                     keyStopY,
                     paint
                 )
+                mAttr.mCurrentX = nodeStartX + mAttr.mScaleLineWidth
             }
             nodeStartX += (perInterval + mAttr.mScaleLineWidth)
             nodeStopX += (perInterval + mAttr.mScaleLineWidth)
         }
+
         canvas.restore()
     }
 

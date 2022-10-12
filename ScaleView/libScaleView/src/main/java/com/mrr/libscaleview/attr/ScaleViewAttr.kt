@@ -20,6 +20,9 @@ class ScaleViewAttr {
     var mPaddingTop = 0
     var mPaddingBottom = 0
 
+    var mCurrentPosition = 0
+    var mCurrentX = 0f
+
     /**
      * 未选
      */
