@@ -1,8 +1,6 @@
 package com.mrr.libscaleview.view
 
-import android.graphics.Canvas
-import android.graphics.Paint
-import android.graphics.RectF
+import android.graphics.*
 import android.util.Log
 import com.mrr.libscaleview.attr.ScaleViewAttr
 import com.mrr.libscaleview.enum.ScaleAttrEnum
@@ -102,24 +100,38 @@ class HorizontalScaleView : BaseScaleView {
 
             if (index < mAttr.mCurrentPosition) {
                 //已滑动部分
+                paint.setColor(Color.parseColor("#FFAE00"))
                 canvas?.drawLine(
                     nodeStartX,
                     nodeStartY,
                     nodeStopX,
                     nodeStopY,
-                    paint
+                    paint1
                 )
             } else {
+                paint.setColor(Color.parseColor("#434343"))
                 //未滑动部分
                 canvas?.drawLine(
                     nodeStartX,
                     startY,
                     nodeStopX,
                     stopY,
-                    paint
+                    paint2
                 )
             }
-            if(index ==  mAttr.mCurrentPosition){
+            if (index == mAttr.mCurrentPosition) {
+                val colors = intArrayOf(Color.parseColor("#FFD700"), Color.parseColor("#FFAE00"))
+                val position = floatArrayOf(0f, 1f)
+                val linearGradient = LinearGradient(
+                    nodeStartX,
+                    keyStartY,
+                    nodeStopX,
+                    keyStopY,
+                    colors,
+                    position,
+                    Shader.TileMode.CLAMP
+                )
+                paint.shader = linearGradient
                 //未滑动部分最后刻度
                 canvas?.drawLine(
                     nodeStartX,

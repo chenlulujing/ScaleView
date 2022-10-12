@@ -76,7 +76,6 @@ abstract class BaseScaleView : CursorRectF.AngelChangeListener, ScaleView.Progre
     var centerY = 0f
 
 
-
     /**
      * 线性刻度切割canvas使用
      */
@@ -93,6 +92,9 @@ abstract class BaseScaleView : CursorRectF.AngelChangeListener, ScaleView.Progre
     var changeColorPaint: Paint
     var cursorPaint: Paint
     var textPaint: Paint
+
+    var paint1: Paint
+    var paint2: Paint
 
     var fontMetrics: Paint.FontMetrics? = null
 
@@ -112,6 +114,8 @@ abstract class BaseScaleView : CursorRectF.AngelChangeListener, ScaleView.Progre
 
         originColorPaint = Paint()
         changeColorPaint = Paint()
+        paint1 = Paint()
+        paint2 = Paint()
         cursorPaint = Paint()
         textPaint = Paint()
         initPaint()
@@ -140,6 +144,19 @@ abstract class BaseScaleView : CursorRectF.AngelChangeListener, ScaleView.Progre
         changeColorPaint.color = mAttr.mProgressColor
         changeColorPaint.strokeWidth = mAttr.mScaleLineWidth
         changeColorPaint.strokeCap = Paint.Cap.ROUND;
+
+
+        paint1.isAntiAlias = true
+        paint1.style = Paint.Style.STROKE
+        paint1.color = Color.parseColor("#FFAE00")
+        paint1.strokeWidth = mAttr.mScaleLineWidth
+        paint1.strokeCap = Paint.Cap.ROUND;
+
+        paint2.isAntiAlias = true
+        paint2.style = Paint.Style.STROKE
+        paint2.color = Color.parseColor("#434343")
+        paint2.strokeWidth = mAttr.mScaleLineWidth
+        paint2.strokeCap = Paint.Cap.ROUND;
 
 
         cursorPaint.isAntiAlias = true
