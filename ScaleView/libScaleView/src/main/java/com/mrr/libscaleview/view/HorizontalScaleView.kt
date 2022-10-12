@@ -3,6 +3,7 @@ package com.mrr.libscaleview.view
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.RectF
+import android.util.Log
 import com.mrr.libscaleview.attr.ScaleViewAttr
 import com.mrr.libscaleview.enum.ScaleAttrEnum
 import com.mrr.libscaleview.rectf.ScaleTextRectF
@@ -32,7 +33,7 @@ class HorizontalScaleView : BaseScaleView {
         interval = mAttr.mHeight - mAttr.mPaddingTop - mAttr.mPaddingBottom
         nodeLength = interval * mAttr.mScaleNodeWidth
         linelength = interval * mAttr.mScaleWidth
-
+        keylength = interval * mAttr.mKeyNodeWidth
         clipRect = RectF()
     }
 
@@ -41,12 +42,12 @@ class HorizontalScaleView : BaseScaleView {
         clipProgress = drawSpace * (touchX - mAttr.mPaddingLeft) / drawSpace
 
         clipRect?.set(0f, 0f, touchX, mAttr.mHeight)
-        drawLineScale(canvas, changeColorPaint, clipRect)
+        drawLineScale(canvas, changeColorPaint, clipRect, touchX)
         progressChange(mAttr.mTotalProgress * (touchX - mAttr.mPaddingLeft) / drawSpace)
 
         clipRect?.set(touchX, 0f, mAttr.mWidth, mAttr.mHeight)
 
-        drawLineScale(canvas, originColorPaint, clipRect)
+        drawLineScale(canvas, originColorPaint, clipRect, touchX)
 
 //        drawCursor(canvas, touchX, touchY)
     }
@@ -60,7 +61,7 @@ class HorizontalScaleView : BaseScaleView {
     /**
      * 画线性的刻度
      */
-    private fun drawLineScale(canvas: Canvas?, paint: Paint, clipRectF: RectF) {
+    private fun drawLineScale(canvas: Canvas?, paint: Paint, clipRectF: RectF, touchX: Float) {
 
 
         canvas!!.save()
@@ -76,20 +77,54 @@ class HorizontalScaleView : BaseScaleView {
         startY = mAttr.mPaddingTop + (interval - linelength) / 2
         stopY = startY + linelength
 
+        keyStartY = mAttr.mPaddingTop + (interval - keylength) / 2
+        keyStopY = keyStartY + keylength
+
+        Log.i("llc_scale","keyStartY =${keyStartY}")
+        Log.i("llc_scale","keyStopY =${keyStopY}")
+        Log.i("llc_scale","keylength =${keylength}")
+
         for (index in 0..mAttr.mTotalProgress) {
 
-            canvas?.drawLine(
-                nodeStartX,
-                nodeStartY,
-                nodeStopX,
-                nodeStopY,
-                paint
-            )
+            if (nodeStartX < touchX) {
+                //已滑动部分
+                canvas?.drawLine(
+                    nodeStartX,
+                    nodeStartY,
+                    nodeStopX,
+                    nodeStopY,
+                    paint
+                )
+            } else {
+                //未滑动部分
+                canvas?.drawLine(
+                    nodeStartX,
+                    startY,
+                    nodeStopX,
+                    stopY,
+                    paint
+                )
+            }
+//            Log.i("llc_scale","draw")
+//            Log.i("llc_scale","mAttr.mScaleLineWidth=${mAttr.mScaleLineWidth}")
+//            Log.i("llc_scale","nodeStartX + mAttr.mScaleLineWidth =${nodeStartX + mAttr.mScaleLineWidth }")
+//            Log.i("llc_scale","touchX =${touchX}")
+//            Log.i("llc_scale","nodeStartX =${nodeStartX}")
+            if (nodeStartX + mAttr.mScaleLineWidth > touchX && nodeStartX < touchX) {
+                //未滑动部分最后刻度
+                Log.i("llc_scale","未滑动部分最后刻度")
+                canvas?.drawLine(
+                    nodeStartX,
+                    keyStartY,
+                    nodeStopX,
+                    keyStopY,
+                    paint
+                )
+            }
             nodeStartX += (perInterval + mAttr.mScaleLineWidth)
             nodeStopX += (perInterval + mAttr.mScaleLineWidth)
         }
         canvas.restore()
-
     }
 
 

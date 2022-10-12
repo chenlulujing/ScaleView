@@ -21,14 +21,19 @@ class ScaleViewAttr {
     var mPaddingBottom = 0
 
     /**
-     * 普通刻度占组件减去padding之后的宽度/高度的比例
+     * 未选
      */
-    var mScaleWidth = 0.5f
+    var mScaleWidth = 8 / 28f
 
     /**
-     * 刻度节点占组件减去padding之后的宽度/高度的比例
+     * 已选
      */
-    var mScaleNodeWidth = 0.7f
+    var mScaleNodeWidth = 17 / 28f
+
+    /**
+     * 已选最后
+     */
+    var mKeyNodeWidth = 1.0f
 
     /**
      * 刻度线线条宽度
@@ -76,7 +81,7 @@ class ScaleViewAttr {
     /**
      * 总刻度
      */
-    var mTotalProgress = 25
+    var mTotalProgress = 26
 
     /**
      * 单位刻度,主要是用来控制节点刻度
@@ -110,11 +115,11 @@ class ScaleViewAttr {
     fun initAttr(typeArray: TypedArray?, context: Context) {
 
         mScaleWidth =
-            typeArray!!.getFloat(R.styleable.scaleView_scaleWidth, 0.5f)
+            typeArray!!.getFloat(R.styleable.scaleView_scaleWidth, mScaleWidth)
 
 
         mScaleNodeWidth =
-            typeArray!!.getFloat(R.styleable.scaleView_scaleNodeWidth, 0.7f)
+            typeArray!!.getFloat(R.styleable.scaleView_scaleNodeWidth, mScaleNodeWidth)
 
         mScaleLineWidth =
             typeArray!!.getDimension(R.styleable.scaleView_scaleLineWidth, 25f)
@@ -149,7 +154,7 @@ class ScaleViewAttr {
             typeArray!!.getDimension(R.styleable.scaleView_cursorGap, 5f)
 
         mTotalProgress =
-            typeArray!!.getInt(R.styleable.scaleView_totalProgress, 25)
+            typeArray!!.getInt(R.styleable.scaleView_totalProgress, mTotalProgress)
 
         mUnitScale =
             typeArray!!.getInt(R.styleable.scaleView_unitScale, 10)

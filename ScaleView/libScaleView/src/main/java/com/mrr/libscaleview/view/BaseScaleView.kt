@@ -42,11 +42,14 @@ abstract class BaseScaleView : CursorRectF.AngelChangeListener, ScaleView.Progre
      */
     var perInterval = 0f
 
-    //第一个节点是一个刻度节点/节点刻度的宽度/高度
+    //已选
     var nodeLength = 0f
 
-    //普通刻度占组件减去padding之后的宽度/高度
+    //未选
     var linelength = 0f
+
+    //已选最后
+    var keylength = 0f
 
     var circleProgressAngel = 0.0
 
@@ -63,6 +66,9 @@ abstract class BaseScaleView : CursorRectF.AngelChangeListener, ScaleView.Progre
 
     var startY = 0f
     var stopY = 0f
+
+    var keyStartY = 0f
+    var keyStopY = 0f
 
     // 屏幕最中心的位置
     var centerX = 0f
