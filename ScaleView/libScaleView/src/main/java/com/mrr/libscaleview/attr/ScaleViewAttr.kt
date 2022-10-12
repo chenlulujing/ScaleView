@@ -21,6 +21,10 @@ class ScaleViewAttr {
     var mPaddingBottom = 0
 
     var mCurrentPosition = 0
+
+    /**
+     * 当前已选x坐标
+     */
     var mCurrentX = 0f
 
     /**

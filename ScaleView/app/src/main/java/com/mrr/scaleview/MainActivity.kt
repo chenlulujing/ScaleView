@@ -13,6 +13,8 @@ class MainActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_main)
 
+       findViewById<com.mrr.libscaleview.ScaleView>(R.id.horizontalScaleView).mProgressChangeListener = progress()
+
     }
 
     inner class progress : ScaleView.ProgressChangeListener {

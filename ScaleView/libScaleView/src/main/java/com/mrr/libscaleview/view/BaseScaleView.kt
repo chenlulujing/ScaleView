@@ -14,6 +14,7 @@ abstract class BaseScaleView : CursorRectF.AngelChangeListener, ScaleView.Progre
 
     var mProgressChangeListener: ScaleView.ProgressChangeListener? = null
 
+    var touching = false
 
     /**
      * 刻度线一半的宽度

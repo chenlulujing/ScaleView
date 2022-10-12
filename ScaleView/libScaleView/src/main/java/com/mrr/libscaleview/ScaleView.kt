@@ -70,7 +70,7 @@ class ScaleView : View {
                 mScaleView = CircleScaleView(mAttr)
             }
         }
-        
+
         typeArray?.recycle()
     }
 
@@ -112,37 +112,50 @@ class ScaleView : View {
         mScaleView.onDraw(canvas, mTouchX, mTouchY)
     }
 
-
     override fun onTouchEvent(event: MotionEvent?): Boolean {
-
         when (event?.action) {
-            MotionEvent.ACTION_DOWN, MotionEvent.ACTION_MOVE, MotionEvent.ACTION_UP -> {
-
-                mTouchX = event.x
-                mTouchY = event.y
-
-                if (mTouchX < paddingLeft) {
-                    mTouchX = paddingLeft.toFloat()
-                }
-
-                if (mTouchX > mWidth - paddingRight) {
-                    mTouchX = mWidth - paddingRight
-                }
-
-                if (mTouchY < paddingTop) {
-                    mTouchY = paddingTop.toFloat()
-                }
-
-                if (mTouchY > mHeight - paddingBottom) {
-                    mTouchY = mHeight - paddingBottom
-                }
-
+            MotionEvent.ACTION_DOWN -> {
+                mScaleView.touching = true
+                touchView(event)
+            }
+            MotionEvent.ACTION_MOVE -> {
+                touchView(event)
+            }
+            MotionEvent.ACTION_UP -> {
+                touchView(event)
+                mScaleView.touching = false
             }
         }
-
-        invalidate()
-
+        var caninvalidate = if (mScaleView is HorizontalScaleView) {
+            (mScaleView as HorizontalScaleView).canDraw(mTouchX)
+        } else {
+            true
+        }
+        if (caninvalidate) {
+            invalidate()
+        }
         return true
+    }
+
+    private fun touchView(event: MotionEvent) {
+        mTouchX = event.x
+        mTouchY = event.y
+
+        if (mTouchX < paddingLeft) {
+            mTouchX = paddingLeft.toFloat()
+        }
+
+        if (mTouchX > mWidth - paddingRight) {
+            mTouchX = mWidth - paddingRight
+        }
+
+        if (mTouchY < paddingTop) {
+            mTouchY = paddingTop.toFloat()
+        }
+
+        if (mTouchY > mHeight - paddingBottom) {
+            mTouchY = mHeight - paddingBottom
+        }
     }
 
     interface ProgressChangeListener {
