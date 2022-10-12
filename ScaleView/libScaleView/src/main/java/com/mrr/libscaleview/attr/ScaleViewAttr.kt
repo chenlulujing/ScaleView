@@ -76,7 +76,7 @@ class ScaleViewAttr {
     /**
      * 总刻度
      */
-    var mTotalProgress = 50
+    var mTotalProgress = 25
 
     /**
      * 单位刻度,主要是用来控制节点刻度
@@ -117,7 +117,7 @@ class ScaleViewAttr {
             typeArray!!.getFloat(R.styleable.scaleView_scaleNodeWidth, 0.7f)
 
         mScaleLineWidth =
-            typeArray!!.getDimension(R.styleable.scaleView_scaleLineWidth, 5f)
+            typeArray!!.getDimension(R.styleable.scaleView_scaleLineWidth, 25f)
 
         var cursorDrawableID = typeArray!!.getResourceId(R.styleable.scaleView_cursorDrawable, 0)
 
@@ -149,7 +149,7 @@ class ScaleViewAttr {
             typeArray!!.getDimension(R.styleable.scaleView_cursorGap, 5f)
 
         mTotalProgress =
-            typeArray!!.getInt(R.styleable.scaleView_totalProgress, 60)
+            typeArray!!.getInt(R.styleable.scaleView_totalProgress, 25)
 
         mUnitScale =
             typeArray!!.getInt(R.styleable.scaleView_unitScale, 10)

@@ -152,7 +152,7 @@ class VerticalScaleView : BaseScaleView {
         );
 
 
-        canvas?.drawBitmap(mAttr.mCursorBitmap, cursorMatrix, null)
+        canvas?.drawBitmap(mAttr.mCursorBitmap!!, cursorMatrix, null)
 
     }
 

@@ -1,9 +1,6 @@
 package com.mrr.libscaleview.view
 
-import android.graphics.Canvas
-import android.graphics.Matrix
-import android.graphics.Paint
-import android.graphics.RectF
+import android.graphics.*
 import com.mrr.libscaleview.ScaleView
 import com.mrr.libscaleview.attr.ScaleViewAttr
 import com.mrr.libscaleview.rectf.CursorRectF
@@ -72,6 +69,7 @@ abstract class BaseScaleView : CursorRectF.AngelChangeListener, ScaleView.Progre
     var centerY = 0f
 
 
+
     /**
      * 线性刻度切割canvas使用
      */
@@ -127,11 +125,14 @@ abstract class BaseScaleView : CursorRectF.AngelChangeListener, ScaleView.Progre
         originColorPaint.style = Paint.Style.STROKE
         originColorPaint.color = mAttr.mDefaultColor
         originColorPaint.strokeWidth = mAttr.mScaleLineWidth
+        originColorPaint.strokeCap = Paint.Cap.ROUND;
+
 
         changeColorPaint.isAntiAlias = true
         changeColorPaint.style = Paint.Style.STROKE
         changeColorPaint.color = mAttr.mProgressColor
         changeColorPaint.strokeWidth = mAttr.mScaleLineWidth
+        changeColorPaint.strokeCap = Paint.Cap.ROUND;
 
 
         cursorPaint.isAntiAlias = true

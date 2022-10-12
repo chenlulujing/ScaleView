@@ -153,7 +153,7 @@ class CircleScaleView : BaseScaleView {
             cursorRectF.mRoutateCenterY
         )
 
-        canvas?.drawBitmap(mAttr.mCursorBitmap, cursorMatrix, null)
+        canvas?.drawBitmap(mAttr.mCursorBitmap!!, cursorMatrix, null)
 
     }
 

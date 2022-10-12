@@ -48,7 +48,7 @@ class HorizontalScaleView : BaseScaleView {
 
         drawLineScale(canvas, originColorPaint, clipRect)
 
-        drawCursor(canvas, touchX, touchY)
+//        drawCursor(canvas, touchX, touchY)
     }
 
 
@@ -80,34 +80,14 @@ class HorizontalScaleView : BaseScaleView {
 
             canvas?.drawLine(
                 nodeStartX,
-                if (index % mAttr.mUnitScale == 0) nodeStartY.toFloat() else startY,
+                nodeStartY,
                 nodeStopX,
-                if (index % mAttr.mUnitScale == 0) nodeStopY.toFloat() else stopY,
+                nodeStopY,
                 paint
             )
-
-            if ((index % mAttr.mUnitScale == 0)) {
-
-                letter = index.toString()
-                scaleTextRectF?.initLineTextSeat(letter, this)
-
-                if (scaleTextRectF?.init == true) {
-
-                    canvas.drawText(
-                        letter,
-                        scaleTextRectF!!.x,
-                        scaleTextRectF!!.baseLine,
-                        textPaint
-                    )
-                }
-            }
-
             nodeStartX += (perInterval + mAttr.mScaleLineWidth)
             nodeStopX += (perInterval + mAttr.mScaleLineWidth)
         }
-
-
-
         canvas.restore()
 
     }
@@ -160,7 +140,7 @@ class HorizontalScaleView : BaseScaleView {
             cursorRectF.mTransY
         );
 
-        canvas?.drawBitmap(mAttr.mCursorBitmap, cursorMatrix, null)
+        canvas?.drawBitmap(mAttr.mCursorBitmap!!, cursorMatrix, null)
 
     }
 

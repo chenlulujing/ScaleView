@@ -57,7 +57,7 @@ class ScaleView : View {
 
         this.mContext = context
         var typeArray = context?.obtainStyledAttributes(attrs, R.styleable.scaleView)
-        mAttr.initAttr(typeArray, mContext)
+        mAttr.initAttr(typeArray, mContext!!)
 
         when {
             (mAttr.mScaleStyle == ScaleAttrEnum.LINE && mAttr.mScaleDirect == ScaleAttrEnum.VERTICAL) -> {
@@ -90,10 +90,10 @@ class ScaleView : View {
 
         setMeasuredDimension(mWidth.toInt(), mHeight.toInt())
 
-        mAttr.mPaddingLeft = mPaddingLeft
-        mAttr.mPaddingRight = mPaddingRight
-        mAttr.mPaddingTop = mPaddingTop
-        mAttr.mPaddingBottom = mPaddingBottom
+        mAttr.mPaddingLeft = paddingLeft
+        mAttr.mPaddingRight = paddingRight
+        mAttr.mPaddingTop = paddingTop
+        mAttr.mPaddingBottom = paddingBottom
 
 
 
